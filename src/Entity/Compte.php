@@ -44,15 +44,16 @@ class Compte
      */
     private $depotInitial;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $dateOuverture;
-
+    
     /**
      * @ORM\OneToMany(targetEntity=Clientparticulier::class, mappedBy="compte")
      */
     private $idClientparticulier;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $Date_Ouverture;
 
     public function __construct()
     {
@@ -124,17 +125,7 @@ class Compte
         return $this;
     }
 
-    public function getDateOuverture(): ?\DateTimeInterface
-    {
-        return $this->dateOuverture;
-    }
-
-    public function setDateOuverture(\DateTimeInterface $dateOuverture): self
-    {
-        $this->dateOuverture = $dateOuverture;
-
-        return $this;
-    }
+    
 
     /**
      * @return Collection|Clientparticulier[]
@@ -163,6 +154,18 @@ class Compte
                 $idClientparticulier->setCompte(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDateOuverture(): ?string
+    {
+        return $this->Date_Ouverture;
+    }
+
+    public function setDateOuverture(string $Date_Ouverture): self
+    {
+        $this->Date_Ouverture = $Date_Ouverture;
 
         return $this;
     }

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 use App\Entity\Compte;
+use PhpParser\Node\Expr\Isset_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -19,10 +20,12 @@ class CompteController extends AbstractController
      */
     public function addcompte()
     {
-        extract($_POST);
-        /*var_dump($_POST);*/
-       
-        $ouvCompte = new Compte();
+        if(isset($_POST['envoyer']))
+        {
+            extract($_POST);
+            //var_dump($_POST);
+            //die;
+            $ouvCompte = new Compte();
         $ouvCompte->setTypeCompte($typeCompte);
         $ouvCompte->setNumeroCompte($NumeroCompte);
         $ouvCompte->setCleRib($CleRib);
@@ -31,8 +34,12 @@ class CompteController extends AbstractController
         $ouvCompte->setDateOuverture($DateOuverture);
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($compte);
+        $em->persist($ouvCompte);
         $em->flush();
+        }
+       
+       
+        
         $data['ok'] = 0;
         
 

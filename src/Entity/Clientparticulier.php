@@ -80,6 +80,8 @@ class Clientparticulier
      */
     private $compte;
 
+    
+
     public function getId(): ?int
     {
         return $this->id;
@@ -230,5 +232,7 @@ class Clientparticulier
 
         return $this;
     }
+
+    
     
 }
