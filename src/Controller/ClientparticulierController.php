@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 use App\Entity\Clientparticulier;
+use App\Entity\Compte;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -22,9 +23,15 @@ class ClientparticulierController extends AbstractController
     public function addparticulier()
     {
         extract($_POST);
-        /*var_dump($_POST);*/
+    
+        $em = $this->getDoctrine()->getManager();
+        $comptes=$em->getRepository(Compte::class)->find($idCompte);
        
         $particulier = new Clientparticulier();
+
+        $compte = $particulier->getCompte();
+        /* var_dump($comptes);
+        die(); */
         $particulier->setNom($nom);
         $particulier->setPrenom($prenom);
         $particulier->setTelephone($telephone);
@@ -36,14 +43,16 @@ class ClientparticulierController extends AbstractController
         $particulier->setSalaireActuel($salaire_actuel);
         $particulier->setNomEmployeur($nom_employeur);
         $particulier->setCni($cni);
+        $particulier->setCompte($comptes);
 
-        $em = $this->getDoctrine()->getManager();
+
+        
         $em->persist($particulier);
         $em->flush();
-        $data['ok'] = 0;
+       
         
 
-        return $this->render('clientparticulier/index.html.twig',$data );
+        return $this->render('welcome/index.html.twig');
     }
     
 }

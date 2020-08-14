@@ -20,6 +20,7 @@ class CompteController extends AbstractController
      */
     public function addcompte()
     {
+        $em = $this->getDoctrine()->getManager();
         if(isset($_POST['envoyer']))
         {
             extract($_POST);
@@ -33,16 +34,18 @@ class CompteController extends AbstractController
         $ouvCompte->setDepotInitial($DepotInitial);
         $ouvCompte->setDateOuverture($DateOuverture);
 
-        $em = $this->getDoctrine()->getManager();
+       
         $em->persist($ouvCompte);
         $em->flush();
         }
        
-       
+       $idCompte=$em->getRepository(Compte::class)->findOneBy(array(),array('id'=>'DESC'));
+       /* var_dump($idCompte->getId());
+       die(); */
         
-        $data['ok'] = 0;
+       $data['idCompte']=$idCompte->getId();
         
 
-        return $this->render('compte/index.html.twig',$data );
+        return $this->render('clientparticulier/index.html.twig',$data );
     }
 }
